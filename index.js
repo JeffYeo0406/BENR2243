@@ -13,7 +13,7 @@ app.listen(port, () => {
 })
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://jeffyeokj:123456abc@fkekkdb.cupg5id.mongodb.net/?retryWrites=true&w=majority&appName=FkekkDB";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -29,12 +29,19 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+    console.log("Connected to MongoDB")
+    // await IMPORTANT!!
+    // insertOne({})
+    // find().toArray()
+    // updateOne({_id, update})
+    let result = await client.db("sample_mflix").collection("students").find().toArray()
+    // Indicator for inserting data into database
+    console.log(result)
+    
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
+    } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
   }
 }
 run().catch(console.dir);
